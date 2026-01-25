@@ -1,8 +1,8 @@
 .{
-    .name = .yuku_benchmark,
+    .name = .zig_parsers,
     .version = "0.0.0",
     .minimum_zig_version = "0.16.0-dev.731+958faa703",
-    .fingerprint = 0xfdf64d7792cb26d1,
+    .fingerprint = 0xa1bd1b16d2a0c0b3,
     .dependencies = .{
         .yuku = .{
             .url = "git+https://github.com/arshad-yaseen/yuku/?ref=HEAD#7cb3ef00aaf936f6c628880fba8331639f7ee145",

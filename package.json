@@ -3,9 +3,9 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "build": "bun build:yuku && bun build:oxc",
-    "build:yuku": "cd yuku && zig build --release=fast && cp ./zig-out/bin/yuku ../bin",
-    "build:oxc": "cd oxc && cargo build --release && cp ./target/release/oxc ../bin",
+    "build": "bun build:zig && bun build:rust",
+    "build:zig": "cd zig && zig build --release=fast && cp ./zig-out/bin/yuku ../bin",
+    "build:rust": "cd rust && cargo build --release && cp ./target/release/oxc ../bin",
     "bench": "bun run build && bun bench:typescript && bun bench:three && bun bench:antd",
     "bench:typescript": "hyperfine --warmup 100 './bin/yuku files/typescript.js' './bin/oxc files/typescript.js' --export-markdown result/typescript.md",
     "bench:three": "hyperfine --warmup 100 './bin/yuku files/three.js' './bin/oxc files/three.js' --export-markdown result/three.md",

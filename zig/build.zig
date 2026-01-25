@@ -11,27 +11,16 @@ pub fn build(b: *std.Build) void {
 
     const yuku = yuku_dep.module("yuku");
 
-    const exe = b.addExecutable(.{
+    const yuku_exe = b.addExecutable(.{
         .name = "yuku",
         .root_module = b.createModule(.{
-            .root_source_file = b.path("src/main.zig"),
+            .root_source_file = b.path("src/yuku.zig"),
             .target = target,
             .optimize = optimize,
         }),
     });
 
-    exe.root_module.addImport("yuku", yuku);
+    yuku_exe.root_module.addImport("yuku", yuku);
 
-    b.installArtifact(exe);
-
-    const run_step = b.step("run", "Run the app");
-
-    const run_cmd = b.addRunArtifact(exe);
-    run_step.dependOn(&run_cmd.step);
-
-    run_cmd.step.dependOn(b.getInstallStep());
-
-    if (b.args) |args| {
-        run_cmd.addArgs(args);
-    }
+    b.installArtifact(yuku_exe);
 }

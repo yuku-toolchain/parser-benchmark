@@ -1,7 +1,13 @@
 [package]
-name = "oxc"
+name = "rust_parsers"
 version = "0.1.0"
-edition = "2024"
+edition = "2021"
+
+[[bin]]
+name = "oxc"
+path = "src/oxc.rs"
+test    = false
+doctest = false
 
 [dependencies]
 oxc_allocator = "0.102.0"
