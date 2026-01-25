@@ -11,41 +11,8 @@ pub fn main() !void {
     const args = try std.process.argsAlloc(allocator);
     defer std.process.argsFree(allocator, args);
 
-    if (args.len < 2) {
-        return error.MissingPath;
-    }
-
     const path = args[1];
-
-    const cwd = std.fs.cwd();
-    const stat = try cwd.statFile(path);
-
-    if (stat.kind == .directory) {
-        try parseDirectory(allocator, path);
-    } else {
-        try parseFile(allocator, path);
-    }
-}
-
-fn parseDirectory(allocator: std.mem.Allocator, dir_path: []const u8) !void {
-    var dir = try std.fs.cwd().openDir(dir_path, .{ .iterate = true });
-    defer dir.close();
-
-    var iter = dir.iterate();
-    while (try iter.next()) |entry| {
-        const full_path = try std.fs.path.join(allocator, &[_][]const u8{ dir_path, entry.name });
-        defer allocator.free(full_path);
-
-        if (entry.kind == .directory) {
-            try parseDirectory(allocator, full_path);
-        } else if (entry.kind == .file) {
-            parseFile(allocator, full_path) catch {};
-        }
-    }
-}
-
-fn parseFile(allocator: std.mem.Allocator, file_path: []const u8) !void {
-    const file = try std.fs.cwd().openFile(file_path, .{});
+    const file = try std.fs.cwd().openFile(path, .{});
     defer file.close();
 
     var buffer: [4096]u8 = undefined;
@@ -54,8 +21,8 @@ fn parseFile(allocator: std.mem.Allocator, file_path: []const u8) !void {
     defer allocator.free(contents);
 
     const tree = try js.parse(std.heap.page_allocator, contents, .{
-        .lang = js.Lang.fromPath(file_path),
-        .source_type = js.SourceType.fromPath(file_path)
+        .lang = js.Lang.fromPath(path),
+        .source_type = js.SourceType.fromPath(path),
     });
 
     defer tree.deinit();
