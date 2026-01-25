@@ -6,10 +6,10 @@
     "build": "bun build:yuku && bun build:oxc",
     "build:yuku": "cd yuku && zig build --release=fast && cp ./zig-out/bin/yuku ../bin",
     "build:oxc": "cd oxc && cargo build --release && cp ./target/release/oxc ../bin",
-    "bench": "bun bench:typescript && bun bench:three && bun bench:antd",
-    "bench:typescript": "hyperfine './bin/yuku files/typescript.js' './bin/oxc files/typescript.js' --export-markdown result/typescript.md",
-    "bench:three": "hyperfine './bin/yuku files/three.js' './bin/oxc files/three.js' --export-markdown result/three.md",
-    "bench:antd": "hyperfine './bin/yuku files/antd.js' './bin/oxc files/antd.js' --export-markdown result/antd.md"
+    "bench": "bun run build && bun bench:typescript && bun bench:three && bun bench:antd",
+    "bench:typescript": "hyperfine --warmup 100 './bin/yuku files/typescript.js' './bin/oxc files/typescript.js' --export-markdown result/typescript.md",
+    "bench:three": "hyperfine --warmup 100 './bin/yuku files/three.js' './bin/oxc files/three.js' --export-markdown result/three.md",
+    "bench:antd": "hyperfine --warmup 100 './bin/yuku files/antd.js' './bin/oxc files/antd.js' --export-markdown result/antd.md"
   },
   "devDependencies": {
     "@types/bun": "latest"
