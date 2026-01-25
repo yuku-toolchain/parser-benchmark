@@ -122,21 +122,48 @@ async function generateBenchmarkTable(
   const data = await readBenchmarkResults(fileKey);
   const lines: string[] = [];
 
-  const sortedResults = [...data.results].sort((a, b) => a.mean - b.mean);
+  const resultsByParser = new Map<ParserKey, BenchmarkResult>();
+  for (const result of data.results) {
+    const parserKey = extractParserName(result.command) as ParserKey;
+    if (PARSERS[parserKey]) {
+      resultsByParser.set(parserKey, result);
+    }
+  }
+
+  const parserEntries: Array<{
+    parser: typeof PARSERS[ParserKey];
+    result: BenchmarkResult | null;
+  }> = [];
+
+  for (const [key, parser] of Object.entries(PARSERS)) {
+    const parserKey = key as ParserKey;
+    const result = resultsByParser.get(parserKey) || null;
+    parserEntries.push({ parser, result });
+  }
+
+  parserEntries.sort((a, b) => {
+    if (a.result && b.result) {
+      return a.result.mean - b.result.mean;
+    }
+    if (a.result && !b.result) return -1;
+    if (!a.result && b.result) return 1;
+    return 0;
+  });
 
   lines.push("| Parser | Mean | Min | Max | MB/s |");
   lines.push("|--------|------|-----|-----|------|");
 
-  for (const result of sortedResults) {
-    const parserKey = extractParserName(result.command) as ParserKey;
-    const parser = PARSERS[parserKey];
-    if (!parser) continue;
-
-    const throughput = formatThroughput(fileSize, result.mean);
-
-    lines.push(
-      `| ${parser.name} | ${formatTime(result.mean)} | ${formatTime(result.min)} | ${formatTime(result.max)} | ${throughput} |`
-    );
+  for (const { parser, result } of parserEntries) {
+    if (result) {
+      const throughput = formatThroughput(fileSize, result.mean);
+      lines.push(
+        `| ${parser.name} | ${formatTime(result.mean)} | ${formatTime(result.min)} | ${formatTime(result.max)} | ${throughput} |`
+      );
+    } else {
+      lines.push(
+        `| ${parser.name} | Failed to parse | - | - | - |`
+      );
+    }
   }
 
   return lines.join("\n");
