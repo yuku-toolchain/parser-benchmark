@@ -6,8 +6,8 @@ Benchmark ECMAScript parsers implemented in native languages.
 
 | Property | Value |
 |----------|-------|
-| OS | Linux 6.11.0-1018-azure (x64) |
-| CPU | AMD EPYC 7763 64-Core Processor |
+| OS | Linux 6.14.0-1014-azure (arm64) |
+| CPU | unknown |
 | Cores | 4 |
 | Memory | 16 GB |
 
@@ -47,10 +47,10 @@ The TypeScript compiler source code bundled into a single file.
 
 | Parser | Mean | Min | Max | MB/s |
 |--------|------|-----|-----|------|
-| Oxc | 79.48 ms | 78.22 ms | 81.78 ms | 98.48 MB/s |
-| Yuku | 82.26 ms | 81.24 ms | 84.66 ms | 95.15 MB/s |
-| SWC | 168.81 ms | 163.06 ms | 186.51 ms | 46.37 MB/s |
-| Jam | 209.89 ms | 206.62 ms | 213.64 ms | 37.29 MB/s |
+| Oxc | 54.76 ms | 54.31 ms | 55.50 ms | 142.93 MB/s |
+| Yuku | 61.62 ms | 61.08 ms | 62.18 ms | 127.03 MB/s |
+| SWC | 120.95 ms | 119.19 ms | 122.48 ms | 64.71 MB/s |
+| Jam | 143.71 ms | 141.68 ms | 146.11 ms | 54.47 MB/s |
 
 ### Three.js
 
@@ -60,10 +60,10 @@ A popular 3D graphics library for the web.
 
 | Parser | Mean | Min | Max | MB/s |
 |--------|------|-----|-----|------|
-| Oxc | 17.65 ms | 17.17 ms | 18.37 ms | 111.18 MB/s |
-| Yuku | 19.11 ms | 18.73 ms | 21.24 ms | 102.71 MB/s |
-| SWC | 33.69 ms | 32.83 ms | 35.46 ms | 58.26 MB/s |
-| Jam | 34.02 ms | 33.33 ms | 35.33 ms | 57.69 MB/s |
+| Oxc | 12.89 ms | 12.47 ms | 15.46 ms | 152.24 MB/s |
+| Yuku | 14.61 ms | 14.29 ms | 15.71 ms | 134.37 MB/s |
+| SWC | 26.39 ms | 24.92 ms | 31.98 ms | 74.39 MB/s |
+| Jam | 26.89 ms | 26.12 ms | 28.51 ms | 72.98 MB/s |
 
 ### Ant Design
 
@@ -73,9 +73,9 @@ A popular React UI component library with enterprise-class design.
 
 | Parser | Mean | Min | Max | MB/s |
 |--------|------|-----|-----|------|
-| Oxc | 62.95 ms | 61.49 ms | 71.01 ms | 86.23 MB/s |
-| Yuku | 63.82 ms | 62.90 ms | 68.53 ms | 85.06 MB/s |
-| SWC | 132.49 ms | 126.86 ms | 151.37 ms | 40.97 MB/s |
+| Oxc | 43.29 ms | 42.95 ms | 43.90 ms | 125.39 MB/s |
+| Yuku | 46.92 ms | 46.53 ms | 47.59 ms | 115.70 MB/s |
+| SWC | 89.99 ms | 88.69 ms | 91.73 ms | 60.32 MB/s |
 
 ## Run Benchmarks
 
