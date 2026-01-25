@@ -1,5 +1,6 @@
 import { readFile, writeFile, stat } from "node:fs/promises";
 import { join } from "node:path";
+import { cpus, totalmem, platform, arch, release } from "node:os";
 
 const PARSERS = {
   yuku: {
@@ -198,6 +199,28 @@ bun bench
 This will build all parsers and run benchmarks on all test files. Results are saved to the \`result/\` directory.`;
 }
 
+function getSystemInfo(): string {
+  const cpu = cpus()[0];
+  const cpuModel = cpu?.model || "Unknown CPU";
+  const cpuCores = cpus().length;
+  const totalMemoryGB = (totalmem() / (1024 * 1024 * 1024)).toFixed(0);
+  const os = platform();
+  const osArch = arch();
+  const osRelease = release();
+
+  const osName =
+    os === "darwin" ? "macOS" : os === "win32" ? "Windows" : os === "linux" ? "Linux" : os;
+
+  return `## System
+
+| Property | Value |
+|----------|-------|
+| OS | ${osName} ${osRelease} (${osArch}) |
+| CPU | ${cpuModel} |
+| Cores | ${cpuCores} |
+| Memory | ${totalMemoryGB} GB |`;
+}
+
 function generateMethodologySection(): string {
   return `## Methodology
 
@@ -227,6 +250,8 @@ async function generateReadme(): Promise<string> {
     "# ECMAScript Native Parser Benchmark",
     "",
     "Benchmark ECMAScript parsers implemented in native languages.",
+    "",
+    getSystemInfo(),
     "",
     generateParsersSection(),
     await generateBenchmarksSection(),

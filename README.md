@@ -2,6 +2,15 @@
 
 Benchmark ECMAScript parsers implemented in native languages.
 
+## System
+
+| Property | Value |
+|----------|-------|
+| OS | macOS 24.5.0 (arm64) |
+| CPU | Apple M3 |
+| Cores | 8 |
+| Memory | 16 GB |
+
 ## Parsers
 
 ### [Yuku](https://github.com/arshad-yaseen/yuku)
