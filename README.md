@@ -119,7 +119,6 @@ This will build all parsers and run benchmarks on all test files. Results are sa
    - Zig parsers: `zig build --release=fast`
 
 2. **Benchmark Phase**: Each parser is benchmarked using [Hyperfine](https://github.com/sharkdp/hyperfine):
-   - 100 warmup runs to ensure stable measurements
    - Multiple timed runs for statistical accuracy
    - Results exported to JSON for analysis
 
@@ -131,3 +130,15 @@ This will build all parsers and run benchmarks on all test files. Results are sa
 ### Test Files
 
 The benchmark uses real-world JavaScript files from popular open-source projects to ensure results reflect practical performance characteristics.
+
+## Adding a New Parser
+
+To add a new parser to the benchmark:
+
+1. **Add parser metadata** to `PARSERS` object in `scripts/generate-readme.ts` (name, language, description, URL)
+2. **Create a wrapper binary** that reads a file path from CLI args and parses it
+   - Rust: Add source file in `rust/src/`, configure in `rust/Cargo.toml`
+   - Zig: Add source file in `zig/src/`, configure dependencies in `zig/build.zig` and `zig/build.zig.zon`
+3. **Update build scripts** in `package.json` to compile and copy binary to `bin/` folder
+4. **Add benchmark commands** in `package.json` for each test file (typescript, three, antd)
+5. Run `bun bench` to generate results and update README
