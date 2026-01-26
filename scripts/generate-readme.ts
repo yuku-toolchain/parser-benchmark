@@ -155,17 +155,7 @@ async function generatePerformanceChart(fileKey: FileKey): Promise<string> {
       responsive: false,
       plugins: {
         title: {
-          display: true,
-          text: FILES[fileKey].name,
-          font: {
-            size: 24,
-            weight: "bold",
-          },
-          color: "#e6edf3",
-          padding: {
-            top: 20,
-            bottom: 20,
-          },
+          display: false,
         },
         legend: {
           display: false,
