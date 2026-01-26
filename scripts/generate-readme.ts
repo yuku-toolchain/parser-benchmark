@@ -1,6 +1,8 @@
-import { readFile, writeFile, stat } from "node:fs/promises";
+import { readFile, writeFile, stat, mkdir } from "node:fs/promises";
 import { join } from "node:path";
 import { cpus, totalmem, platform, arch, release } from "node:os";
+import { ChartJSNodeCanvas } from "chartjs-node-canvas";
+import type { ChartConfiguration } from "chart.js";
 
 const PARSERS = {
   yuku: {
@@ -77,6 +79,147 @@ function formatBytes(bytes: number): string {
 function formatTime(seconds: number): string {
   const ms = seconds * 1000;
   return `${ms.toFixed(2)} ms`;
+}
+
+const CHART_COLORS = {
+  yuku: "#FF6B35",
+  oxc: "#F72585",
+  swc: "#4CC9F0",
+  jam: "#7209B7",
+};
+
+async function generatePerformanceChart(fileKey: FileKey): Promise<string> {
+  const data = await readBenchmarkResults(fileKey);
+  const chartWidth = 800;
+  const chartHeight = 400;
+
+  const resultsByParser = new Map<ParserKey, BenchmarkResult>();
+  for (const result of data.results) {
+    const parserKey = extractParserName(result.command) as ParserKey;
+    if (PARSERS[parserKey]) {
+      resultsByParser.set(parserKey, result);
+    }
+  }
+
+  const parserData: Array<{
+    name: string;
+    mean: number;
+    color: string;
+  }> = [];
+
+  for (const [key, parser] of Object.entries(PARSERS)) {
+    const parserKey = key as ParserKey;
+    const result = resultsByParser.get(parserKey);
+    if (result) {
+      parserData.push({
+        name: parser.name,
+        mean: result.mean * 1000,
+        color: CHART_COLORS[parserKey],
+      });
+    }
+  }
+
+  parserData.sort((a, b) => a.mean - b.mean);
+
+  const labels = parserData.map((p) => p.name);
+  const meanData = parserData.map((p) => p.mean);
+  const colors = parserData.map((p) => p.color);
+
+  const maxTime = Math.max(...meanData);
+  const chartMax = maxTime < 200 ? 200 : maxTime < 500 ? 500 : 1000;
+
+  const chartJSNodeCanvas = new ChartJSNodeCanvas({
+    width: chartWidth,
+    height: chartHeight,
+    backgroundColour: "#0d1117",
+  });
+
+  const configuration: ChartConfiguration = {
+    type: "bar",
+    data: {
+      labels,
+      datasets: [
+        {
+          label: "Time (ms)",
+          data: meanData,
+          backgroundColor: colors,
+          borderColor: colors,
+          borderWidth: 0,
+          borderRadius: 6,
+          barThickness: 40,
+        },
+      ],
+    },
+    options: {
+      indexAxis: "y",
+      responsive: false,
+      plugins: {
+        title: {
+          display: true,
+          text: FILES[fileKey].name,
+          font: {
+            size: 24,
+            weight: "bold",
+          },
+          color: "#e6edf3",
+          padding: {
+            top: 20,
+            bottom: 20,
+          },
+        },
+        legend: {
+          display: false,
+        },
+      },
+      scales: {
+        x: {
+          beginAtZero: true,
+          max: chartMax,
+          grid: {
+            color: "#21262d",
+            lineWidth: 1,
+          },
+          ticks: {
+            color: "#8b949e",
+            font: {
+              size: 12,
+            },
+            callback: function (value) {
+              return value + " ms";
+            },
+          },
+          title: {
+            display: true,
+            text: "Parse Time",
+            font: {
+              size: 14,
+              weight: "bold",
+            },
+            color: "#8b949e",
+          },
+        },
+        y: {
+          grid: {
+            display: false,
+          },
+          ticks: {
+            color: "#e6edf3",
+            font: {
+              size: 14,
+              weight: 500,
+            },
+          },
+        },
+      },
+    },
+  };
+
+  const imageBuffer = await chartJSNodeCanvas.renderToBuffer(configuration);
+  const chartPath = join(process.cwd(), "charts", `${fileKey}.png`);
+  await mkdir(join(process.cwd(), "charts"), { recursive: true });
+  await writeFile(chartPath, imageBuffer);
+
+  return `charts/${fileKey}.png`;
 }
 
 
@@ -179,6 +322,10 @@ async function generateBenchmarksSection(): Promise<string> {
     lines.push(`${file.description}`);
     lines.push("");
     lines.push(`**File size:** ${formatBytes(fileSize)}`);
+    lines.push("");
+
+    const chartPath = await generatePerformanceChart(fileKey);
+    lines.push(`![${file.name} Performance](${chartPath})`);
     lines.push("");
 
     const table = await generateBenchmarkTable(fileKey, fileSize);

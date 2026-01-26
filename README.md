@@ -6,9 +6,9 @@ Benchmark ECMAScript parsers implemented in native languages.
 
 | Property | Value |
 |----------|-------|
-| OS | Linux 6.11.0-1018-azure (x64) |
-| CPU | Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz |
-| Cores | 4 |
+| OS | macOS 24.5.0 (arm64) |
+| CPU | Apple M3 |
+| Cores | 8 |
 | Memory | 16 GB |
 
 ## Parsers
@@ -45,12 +45,14 @@ The TypeScript compiler source code bundled into a single file.
 
 **File size:** 7.83 MB
 
-| Parser | Mean | Min | Max | MB/s |
-|--------|------|-----|-----|------|
-| Oxc | 68.85 ms | 68.23 ms | 71.46 ms | 113.68 MB/s |
-| Yuku | 70.79 ms | 70.31 ms | 75.03 ms | 110.56 MB/s |
-| SWC | 141.51 ms | 138.63 ms | 145.66 ms | 55.31 MB/s |
-| Jam | 159.99 ms | 157.80 ms | 161.27 ms | 48.92 MB/s |
+![TypeScript Performance](charts/typescript.png)
+
+| Parser | Mean | Min | Max |
+|--------|------|-----|-----|
+| Oxc | 68.85 ms | 68.23 ms | 71.46 ms |
+| Yuku | 70.79 ms | 70.31 ms | 75.03 ms |
+| SWC | 141.51 ms | 138.63 ms | 145.66 ms |
+| Jam | 159.99 ms | 157.80 ms | 161.27 ms |
 
 ### [Three.js](https://github.com/arshad-yaseen/ecmascript-native-parser-benchmark/blob/main/files/three.js)
 
@@ -58,12 +60,14 @@ A popular 3D graphics library for the web.
 
 **File size:** 1.96 MB
 
-| Parser | Mean | Min | Max | MB/s |
-|--------|------|-----|-----|------|
-| Oxc | 15.22 ms | 14.70 ms | 16.26 ms | 128.99 MB/s |
-| Yuku | 16.78 ms | 16.11 ms | 18.28 ms | 116.95 MB/s |
-| SWC | 29.22 ms | 28.16 ms | 30.84 ms | 67.17 MB/s |
-| Jam | 35.60 ms | 34.90 ms | 36.54 ms | 55.13 MB/s |
+![Three.js Performance](charts/three.png)
+
+| Parser | Mean | Min | Max |
+|--------|------|-----|-----|
+| Oxc | 15.22 ms | 14.70 ms | 16.26 ms |
+| Yuku | 16.78 ms | 16.11 ms | 18.28 ms |
+| SWC | 29.22 ms | 28.16 ms | 30.84 ms |
+| Jam | 35.60 ms | 34.90 ms | 36.54 ms |
 
 ### [Ant Design](https://github.com/arshad-yaseen/ecmascript-native-parser-benchmark/blob/main/files/antd.js)
 
@@ -71,12 +75,14 @@ A popular React UI component library with enterprise-class design.
 
 **File size:** 5.43 MB
 
-| Parser | Mean | Min | Max | MB/s |
-|--------|------|-----|-----|------|
-| Yuku | 54.73 ms | 54.03 ms | 56.38 ms | 99.18 MB/s |
-| Oxc | 55.19 ms | 54.59 ms | 56.25 ms | 98.36 MB/s |
-| SWC | 106.76 ms | 105.86 ms | 107.85 ms | 50.85 MB/s |
-| Jam | Failed to parse | - | - | - |
+![Ant Design Performance](charts/antd.png)
+
+| Parser | Mean | Min | Max |
+|--------|------|-----|-----|
+| Yuku | 54.73 ms | 54.03 ms | 56.38 ms |
+| Oxc | 55.19 ms | 54.59 ms | 56.25 ms |
+| SWC | 106.76 ms | 105.86 ms | 107.85 ms |
+| Jam | Failed to parse | - | - |
 
 ## Run Benchmarks
 
@@ -119,6 +125,7 @@ This will build all parsers and run benchmarks on all test files. Results are sa
    - Zig parsers: `zig build --release=fast`
 
 2. **Benchmark Phase**: Each parser is benchmarked using [Hyperfine](https://github.com/sharkdp/hyperfine):
+   - 100 warmup runs to ensure stable measurements
    - Multiple timed runs for statistical accuracy
    - Results exported to JSON for analysis
 
@@ -130,15 +137,3 @@ This will build all parsers and run benchmarks on all test files. Results are sa
 ### Test Files
 
 The benchmark uses real-world JavaScript files from popular open-source projects to ensure results reflect practical performance characteristics.
-
-## Adding a New Parser
-
-To add a new parser to the benchmark:
-
-1. **Add parser metadata** to `PARSERS` object in `scripts/generate-readme.ts` (name, language, description, URL)
-2. **Create a wrapper binary** that reads a file path from CLI args and parses it
-   - Rust: Add source file in `rust/src/`, configure in `rust/Cargo.toml`
-   - Zig: Add source file in `zig/src/`, configure dependencies in `zig/build.zig` and `zig/build.zig.zon`
-3. **Update build scripts** in `package.json` to compile and copy binary to `bin/` folder
-4. **Add benchmark commands** in `package.json` for each test file (typescript, three, antd)
-5. Run `bun bench` to generate results and update README
