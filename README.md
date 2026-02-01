@@ -7,7 +7,7 @@ Benchmark ECMAScript parsers implemented in native languages.
 | Property | Value |
 |----------|-------|
 | OS | Linux 6.11.0-1018-azure (x64) |
-| CPU | Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz |
+| CPU | AMD EPYC 7763 64-Core Processor |
 | Cores | 4 |
 | Memory | 16 GB |
 
@@ -49,10 +49,10 @@ The TypeScript compiler source code bundled into a single file.
 
 | Parser | Mean | Min | Max |
 |--------|------|-----|-----|
-| Oxc | 70.31 ms | 69.57 ms | 75.63 ms |
-| Yuku | 71.29 ms | 70.81 ms | 74.28 ms |
-| SWC | 142.37 ms | 141.51 ms | 143.33 ms |
-| Jam | 162.54 ms | 159.70 ms | 165.51 ms |
+| Oxc | 80.57 ms | 79.60 ms | 87.58 ms |
+| Yuku | 82.36 ms | 81.40 ms | 89.06 ms |
+| SWC | 161.34 ms | 160.23 ms | 162.53 ms |
+| Jam | 190.65 ms | 189.59 ms | 192.15 ms |
 
 ### [Three.js](https://github.com/arshad-yaseen/ecmascript-native-parser-benchmark/blob/main/files/three.js)
 
@@ -64,10 +64,10 @@ A popular 3D graphics library for the web.
 
 | Parser | Mean | Min | Max |
 |--------|------|-----|-----|
-| Oxc | 15.79 ms | 15.14 ms | 22.95 ms |
-| Yuku | 17.21 ms | 16.65 ms | 27.18 ms |
-| SWC | 30.63 ms | 29.90 ms | 48.06 ms |
-| Jam | 37.00 ms | 36.15 ms | 44.82 ms |
+| Oxc | 17.68 ms | 17.28 ms | 18.64 ms |
+| Yuku | 19.06 ms | 18.63 ms | 19.66 ms |
+| SWC | 34.05 ms | 32.82 ms | 35.70 ms |
+| Jam | 41.76 ms | 41.06 ms | 42.62 ms |
 
 ### [Ant Design](https://github.com/arshad-yaseen/ecmascript-native-parser-benchmark/blob/main/files/antd.js)
 
@@ -79,9 +79,9 @@ A popular React UI component library with enterprise-class design.
 
 | Parser | Mean | Min | Max |
 |--------|------|-----|-----|
-| Yuku | 54.75 ms | 54.39 ms | 56.67 ms |
-| Oxc | 55.67 ms | 55.12 ms | 63.46 ms |
-| SWC | 108.83 ms | 107.86 ms | 110.17 ms |
+| Oxc | 63.64 ms | 62.89 ms | 64.70 ms |
+| Yuku | 63.77 ms | 63.17 ms | 64.83 ms |
+| SWC | 126.19 ms | 124.43 ms | 128.72 ms |
 | Jam | Failed to parse | - | - |
 
 ## Run Benchmarks
