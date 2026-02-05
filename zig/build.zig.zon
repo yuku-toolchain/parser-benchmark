@@ -1,7 +1,7 @@
 .{
     .name = .zig_parsers,
     .version = "0.0.0",
-    .minimum_zig_version = "0.16.0-dev.731+958faa703",
+    .minimum_zig_version = "master",
     .fingerprint = 0xa1bd1b16d2a0c0b3,
     .dependencies = .{
         .yuku = .{

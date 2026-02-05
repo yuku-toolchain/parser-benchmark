@@ -27,7 +27,7 @@ jobs:
       - name: Setup Zig
         uses: mlugg/setup-zig@v2
         with:
-          version: 0.16.0-dev.731+958faa703
+          version: master
 
       - name: Setup Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1
