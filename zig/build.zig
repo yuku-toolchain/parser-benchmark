@@ -14,7 +14,7 @@ pub fn build(b: *std.Build) void {
         .optimize = optimize,
     });
 
-    const yuku = yuku_dep.module("yuku");
+    const yuku = yuku_dep.module("js");
     const jam = jam_dep.module("js");
 
     const yuku_exe = b.addExecutable(.{
