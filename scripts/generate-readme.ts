@@ -4,6 +4,8 @@ import { cpus, totalmem, platform, arch, release } from "node:os";
 import { ChartJSNodeCanvas } from "chartjs-node-canvas";
 import type { ChartConfiguration } from "chart.js";
 
+const FILES_SOURCE_URL_PREFIX = "https://raw.githubusercontent.com/yuku-toolchain/parser-benchmark-files/refs/heads/main"
+
 const PARSERS = {
   yuku: {
     name: "Yuku",
@@ -41,17 +43,20 @@ const FILES = {
     description:
       "The TypeScript compiler source code bundled into a single file.",
     path: "files/typescript.js",
+    source_url: `${FILES_SOURCE_URL_PREFIX}/typescript.js`,
   },
   three: {
     name: "Three.js",
     description: "A popular 3D graphics library for the web.",
     path: "files/three.js",
+    source_url: `${FILES_SOURCE_URL_PREFIX}/three.js`,
   },
   antd: {
     name: "Ant Design",
     description:
       "A popular React UI component library with enterprise-class design.",
     path: "files/antd.js",
+    source_url: `${FILES_SOURCE_URL_PREFIX}/antd.js`,
   },
 } as const;
 
@@ -320,9 +325,7 @@ async function generateBenchmarksSection(): Promise<string> {
     const filePath = join(process.cwd(), file.path);
     const fileSize = await getFileSize(filePath);
 
-    const githubUrl = `https://github.com/arshad-yaseen/ecmascript-native-parser-benchmark/blob/main/${file.path}`;
-
-    lines.push(`### [${file.name}](${githubUrl})`);
+    lines.push(`### [${file.name}](${file.source_url})`);
     lines.push("");
     lines.push(`${file.description}`);
     lines.push("");
