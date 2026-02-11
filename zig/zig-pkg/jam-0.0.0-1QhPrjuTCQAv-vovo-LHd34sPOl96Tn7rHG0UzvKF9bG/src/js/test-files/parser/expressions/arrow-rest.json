@@ -1,0 +1,221 @@
+{
+  "type": "Program",
+  "start": 0,
+  "end": 112,
+  "body": [
+    {
+      "type": "ExpressionStatement",
+      "start": 0,
+      "end": 26,
+      "expression": {
+        "type": "FunctionExpression",
+        "start": 0,
+        "end": 25,
+        "generator": false,
+        "async": false,
+        "arrow": true,
+        "params": [
+          {
+            "type": "Identifier",
+            "start": 1,
+            "end": 2,
+            "name": "a"
+          },
+          {
+            "type": "Identifier",
+            "start": 4,
+            "end": 5,
+            "name": "b"
+          },
+          {
+            "type": "RestElement",
+            "start": 7,
+            "end": 11,
+            "argument": {
+              "type": "Identifier",
+              "start": 10,
+              "end": 11,
+              "name": "c"
+            }
+          }
+        ],
+        "body": {
+          "type": "BinaryExpression",
+          "start": 16,
+          "end": 25,
+          "operator": "+",
+          "left": {
+            "type": "BinaryExpression",
+            "start": 16,
+            "end": 21,
+            "operator": "+",
+            "left": {
+              "type": "Identifier",
+              "start": 16,
+              "end": 17,
+              "name": "a"
+            },
+            "right": {
+              "type": "Identifier",
+              "start": 20,
+              "end": 21,
+              "name": "b"
+            }
+          },
+          "right": {
+            "type": "Identifier",
+            "start": 24,
+            "end": 25,
+            "name": "c"
+          }
+        }
+      }
+    },
+    {
+      "type": "ExpressionStatement",
+      "start": 27,
+      "end": 51,
+      "expression": {
+        "type": "FunctionExpression",
+        "start": 27,
+        "end": 50,
+        "generator": false,
+        "async": false,
+        "arrow": true,
+        "params": [
+          {
+            "type": "Identifier",
+            "start": 28,
+            "end": 29,
+            "name": "a"
+          },
+          {
+            "type": "Identifier",
+            "start": 31,
+            "end": 32,
+            "name": "b"
+          },
+          {
+            "type": "Identifier",
+            "start": 34,
+            "end": 35,
+            "name": "c"
+          }
+        ],
+        "body": {
+          "type": "BinaryExpression",
+          "start": 41,
+          "end": 50,
+          "operator": "+",
+          "left": {
+            "type": "BinaryExpression",
+            "start": 41,
+            "end": 46,
+            "operator": "+",
+            "left": {
+              "type": "Identifier",
+              "start": 41,
+              "end": 42,
+              "name": "a"
+            },
+            "right": {
+              "type": "Identifier",
+              "start": 45,
+              "end": 46,
+              "name": "b"
+            }
+          },
+          "right": {
+            "type": "Identifier",
+            "start": 49,
+            "end": 50,
+            "name": "c"
+          }
+        }
+      }
+    },
+    {
+      "type": "ExpressionStatement",
+      "start": 52,
+      "end": 66,
+      "expression": {
+        "type": "FunctionExpression",
+        "start": 52,
+        "end": 65,
+        "generator": false,
+        "async": false,
+        "arrow": true,
+        "params": [
+          {
+            "type": "RestElement",
+            "start": 53,
+            "end": 58,
+            "argument": {
+              "type": "ArrayPattern",
+              "start": 56,
+              "end": 58,
+              "elements": []
+            }
+          }
+        ],
+        "body": {
+          "type": "ArrayExpression",
+          "start": 63,
+          "end": 65,
+          "elements": []
+        }
+      }
+    },
+    {
+      "type": "ExpressionStatement",
+      "start": 67,
+      "end": 84,
+      "expression": {
+        "type": "FunctionExpression",
+        "start": 67,
+        "end": 83,
+        "generator": false,
+        "async": false,
+        "arrow": true,
+        "params": [
+          {
+            "type": "RestElement",
+            "start": 68,
+            "end": 76,
+            "argument": {
+              "type": "ObjectPattern",
+              "start": 71,
+              "end": 76,
+              "properties": [
+                {
+                  "type": "AssignmentPattern",
+                  "start": 72,
+                  "end": 75,
+                  "left": {
+                    "type": "Identifier",
+                    "start": 72,
+                    "end": 73,
+                    "name": "x"
+                  },
+                  "right": {
+                    "type": "Literal",
+                    "start": 74,
+                    "end": 75,
+                    "value": 1,
+                    "raw": "1"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "body": {
+          "type": "BlockStatement",
+          "start": 81,
+          "end": 83,
+          "body": []
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "type": "Program",
+  "start": 0,
+  "end": 102,
+  "body": [
+    {
+      "type": "FunctionDeclaration",
+      "start": 0,
+      "end": 53,
+      "id": {
+        "type": "Identifier",
+        "start": 9,
+        "end": 14,
+        "name": "async"
+      },
+      "generator": false,
+      "async": false,
+      "params": [],
+      "body": {
+        "type": "BlockStatement",
+        "start": 17,
+        "end": 53,
+        "body": [
+          {
+            "type": "VariableDeclaration",
+            "start": 20,
+            "end": 36,
+            "declarations": [
+              {
+                "type": "VariableDeclarator",
+                "start": 24,
+                "end": 35,
+                "id": {
+                  "type": "Identifier",
+                  "start": 24,
+                  "end": 29,
+                  "name": "await"
+                },
+                "init": {
+                  "type": "Literal",
+                  "start": 32,
+                  "end": 35,
+                  "value": 123,
+                  "raw": "123"
+                }
+              }
+            ],
+            "kind": "let"
+          },
+          {
+            "type": "ReturnStatement",
+            "start": 38,
+            "end": 51,
+            "argument": {
+              "type": "Identifier",
+              "start": 45,
+              "end": 50,
+              "name": "await"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "FunctionDeclaration",
+      "start": 55,
+      "end": 100,
+      "id": {
+        "type": "Identifier",
+        "start": 70,
+        "end": 75,
+        "name": "async"
+      },
+      "generator": false,
+      "async": true,
+      "params": [],
+      "body": {
+        "type": "BlockStatement",
+        "start": 78,
+        "end": 100,
+        "body": [
+          {
+            "type": "ReturnStatement",
+            "start": 81,
+            "end": 98,
+            "argument": {
+              "type": "AwaitExpression",
+              "start": 88,
+              "end": 97,
+              "argument": {
+                "type": "Literal",
+                "start": 94,
+                "end": 97,
+                "value": 123,
+                "raw": "123"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
