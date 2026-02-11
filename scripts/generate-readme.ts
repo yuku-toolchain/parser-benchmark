@@ -65,6 +65,7 @@ interface BenchmarkResult {
   median: number;
   min: number;
   max: number;
+  memory_usage_byte?: number[];
 }
 
 interface BenchmarkData {
@@ -79,6 +80,16 @@ function formatBytes(bytes: number): string {
 function formatTime(seconds: number): string {
   const ms = seconds * 1000;
   return `${ms.toFixed(2)} ms`;
+}
+
+function formatMemory(bytes: number): string {
+  const mb = bytes / (1024 * 1024);
+  return `${mb.toFixed(1)} MB`;
+}
+
+function getPeakMemory(result: BenchmarkResult): number | null {
+  if (!result.memory_usage_byte || result.memory_usage_byte.length === 0) return null;
+  return Math.max(...result.memory_usage_byte);
 }
 
 const CHART_COLORS = {
@@ -232,7 +243,7 @@ async function readBenchmarkResults(fileKey: FileKey): Promise<BenchmarkData> {
 function generateParsersSection(): string {
   const lines = ["## Parsers", ""];
 
-  for (const [key, parser] of Object.entries(PARSERS)) {
+  for (const [, parser] of Object.entries(PARSERS)) {
     lines.push(`### [${parser.name}](${parser.url})`);
     lines.push("");
     lines.push(`**Language:** ${parser.language}`);
@@ -246,7 +257,6 @@ function generateParsersSection(): string {
 
 async function generateBenchmarkTable(
   fileKey: FileKey,
-  fileSize: number
 ): Promise<string> {
   const data = await readBenchmarkResults(fileKey);
   const lines: string[] = [];
@@ -279,17 +289,19 @@ async function generateBenchmarkTable(
     return 0;
   });
 
-  lines.push("| Parser | Mean | Min | Max |");
-  lines.push("|--------|------|-----|-----|");
+  lines.push("| Parser | Mean | Min | Max | Peak Memory (RSS) |");
+  lines.push("|--------|------|-----|-----|----|");
 
   for (const { parser, result } of parserEntries) {
     if (result) {
+      const memory = getPeakMemory(result);
+      const memoryStr = memory ? formatMemory(memory) : "-";
       lines.push(
-        `| ${parser.name} | ${formatTime(result.mean)} | ${formatTime(result.min)} | ${formatTime(result.max)} |`
+        `| ${parser.name} | ${formatTime(result.mean)} | ${formatTime(result.min)} | ${formatTime(result.max)} | ${memoryStr} |`
       );
     } else {
       lines.push(
-        `| ${parser.name} | Failed to parse | - | - |`
+        `| ${parser.name} | Failed to parse | - | - | - |`
       );
     }
   }
@@ -304,7 +316,7 @@ async function generateBenchmarksSection(): Promise<string> {
     const fileKey = key as FileKey;
     const filePath = join(process.cwd(), file.path);
     const fileSize = await getFileSize(filePath);
-    
+
     const githubUrl = `https://github.com/arshad-yaseen/ecmascript-native-parser-benchmark/blob/main/${file.path}`;
 
     lines.push(`### [${file.name}](${githubUrl})`);
@@ -318,7 +330,7 @@ async function generateBenchmarksSection(): Promise<string> {
     lines.push(`![${file.name} Performance](${chartPath})`);
     lines.push("");
 
-    const table = await generateBenchmarkTable(fileKey, fileSize);
+    const table = await generateBenchmarkTable(fileKey);
     lines.push(table);
     lines.push("");
   }

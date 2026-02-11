@@ -6,9 +6,9 @@ Benchmark ECMAScript parsers implemented in native languages.
 
 | Property | Value |
 |----------|-------|
-| OS | Linux 6.11.0-1018-azure (x64) |
-| CPU | AMD EPYC 7763 64-Core Processor |
-| Cores | 4 |
+| OS | macOS 24.6.0 (arm64) |
+| CPU | Apple M3 |
+| Cores | 8 |
 | Memory | 16 GB |
 
 ## Parsers
@@ -47,12 +47,12 @@ The TypeScript compiler source code bundled into a single file.
 
 ![TypeScript Performance](charts/typescript.png)
 
-| Parser | Mean | Min | Max |
-|--------|------|-----|-----|
-| Oxc | 79.12 ms | 78.49 ms | 80.10 ms |
-| Yuku | 81.78 ms | 79.43 ms | 83.88 ms |
-| SWC | 158.55 ms | 155.38 ms | 161.64 ms |
-| Jam | 191.64 ms | 189.85 ms | 192.84 ms |
+| Parser | Mean | Min | Max | Peak Memory (RSS) |
+|--------|------|-----|-----|----|
+| Oxc | 29.77 ms | 29.25 ms | 42.01 ms | - |
+| Yuku | 32.38 ms | 31.95 ms | 33.17 ms | - |
+| Jam | 54.81 ms | 53.77 ms | 69.87 ms | - |
+| SWC | 57.18 ms | 56.11 ms | 64.06 ms | - |
 
 ### [Three.js](https://github.com/arshad-yaseen/ecmascript-native-parser-benchmark/blob/main/files/three.js)
 
@@ -62,12 +62,12 @@ A popular 3D graphics library for the web.
 
 ![Three.js Performance](charts/three.png)
 
-| Parser | Mean | Min | Max |
-|--------|------|-----|-----|
-| Oxc | 17.19 ms | 16.20 ms | 18.39 ms |
-| Yuku | 19.06 ms | 18.15 ms | 20.77 ms |
-| SWC | 31.97 ms | 30.25 ms | 33.99 ms |
-| Jam | 42.11 ms | 41.03 ms | 43.35 ms |
+| Parser | Mean | Min | Max | Peak Memory (RSS) |
+|--------|------|-----|-----|----|
+| Yuku | 8.68 ms | 8.36 ms | 9.05 ms | - |
+| Oxc | 8.69 ms | 7.46 ms | 31.71 ms | - |
+| SWC | 14.27 ms | 13.36 ms | 17.88 ms | - |
+| Jam | 14.72 ms | 13.54 ms | 16.60 ms | - |
 
 ### [Ant Design](https://github.com/arshad-yaseen/ecmascript-native-parser-benchmark/blob/main/files/antd.js)
 
@@ -77,12 +77,12 @@ A popular React UI component library with enterprise-class design.
 
 ![Ant Design Performance](charts/antd.png)
 
-| Parser | Mean | Min | Max |
-|--------|------|-----|-----|
-| Oxc | 62.72 ms | 61.15 ms | 63.65 ms |
-| Yuku | 63.25 ms | 62.55 ms | 63.84 ms |
-| SWC | 121.59 ms | 118.75 ms | 123.15 ms |
-| Jam | Failed to parse | - | - |
+| Parser | Mean | Min | Max | Peak Memory (RSS) |
+|--------|------|-----|-----|----|
+| Oxc | 23.99 ms | 23.60 ms | 31.81 ms | - |
+| Yuku | 24.23 ms | 23.89 ms | 25.44 ms | - |
+| SWC | 43.79 ms | 43.37 ms | 44.94 ms | - |
+| Jam | Failed to parse | - | - | - |
 
 ## Run Benchmarks
 
